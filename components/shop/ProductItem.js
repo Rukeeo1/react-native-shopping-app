@@ -11,6 +11,18 @@ import {
   Platform,
 } from 'react-native';
 
+import { Ionicons } from '@expo/vector-icons';
+
+import { AntDesign } from '@expo/vector-icons';
+
+// export default class IconExample extends React.Component {
+//   render() {
+//     return (
+//       <Ionicons name="md-checkmark-circle" size={32} color="green" />
+//     );
+//   }
+// }
+
 const ProductItem = (props) => {
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -21,27 +33,38 @@ const ProductItem = (props) => {
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onViewDetail} useForeground>
           <View>
+            <View style={styles.imageCount}>
+              <Image style={styles.image} source={{ uri: props.image }} />
+            </View>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 3,
+                fontSize: 18,
+                fontWeight: 900,
+              }}
+            >
+              <Text style={styles.title}>{props.title}</Text>
+              <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+            </View>
+            <View style={styles.actions}>
+              <Button
+                color={Colors.primary}
+                title="View Details"
+                onPress={props.onViewDetail}
+              />
+              <Button
+                color={Colors.accent}
+                title="Add To Cart"
+                onPress={props.onAddToCart}
+              />
 
-          <View style={styles.imageCount}>
-            <Image style={styles.image} source={{ uri: props.image }} />
-          </View>
-          <Text style={styles.title}>{props.title}</Text>
-          <Text style={styles.price}>${props.price.toFixed(2)}</Text>
-          <View style={styles.actions}>
-            <Button
-              color={Colors.primary}
-              title="View Details"
-              onPress={props.onViewDetail}
-            />
-            <Button
-              color={Colors.accent}
-              title="To Cart"
-              onPress={props.onAddToCart}
-            />
-          </View>
+            </View>
           </View>
         </TouchableCmp>
       </View>
+      <View></View>
     </View>
   );
 };
@@ -57,9 +80,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
   },
-  touchable:{
+  touchable: {
     overflow: 'hidden',
-    borderRadius: 10
+    borderRadius: 10,
   },
   imageCount: {
     width: '100%',
@@ -80,12 +103,13 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 14,
     color: '#888',
+    // fontFamily:'open-sans-bold'
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '25%',
+    height: '20%',
     paddingHorizontal: 20,
   },
 });

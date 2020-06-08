@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   ScrollView,
   Image,
@@ -7,25 +7,52 @@ import {
   View,
   Text,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import Colors from '../../constants/colors'
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../../store/actions/cart';
+import Colors from '../../constants/colors';
+import { Entypo } from '@expo/vector-icons';
 
 const ProductDetailsScreen = ({ route, navigation }) => {
   const { productId } = route.params;
   const selectedProduct = useSelector((state) =>
     state.products.availableProducts.find((prod) => prod.id === productId)
   );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View>
+          {Platform.OS === 'ios' && (
+            <Button
+              title="Add"
+              onPress={() => navigation.navigate('Cart Screen')}
+            />
+          )}
+          <Entypo
+            name="shopping-cart"
+            size={24}
+            color="black"
+            onPress={() => navigation.navigate('Cart Screen')}
+          />
+        </View>
+      ),
+    });
+  });
+
   return (
     <ScrollView>
-      {/* <TouchableHighlight onPress={() => navigation.navigate('Test Input')}>
-        <View>
-          <Text>Product Details Screen</Text>
-          <Text>{selectedProduct.title}</Text>
-        </View>
-      </TouchableHighlight> */}
-      <Image style={styles.image} source={{uri: selectedProduct.imageUrl}} />
-      <Button color={Colors.primary} title="Add to Cart" onPress={() => {}}/>
+      <Image style={styles.image} source={{ uri: selectedProduct.imageUrl }} />
+      <Button
+        color={Colors.primary}
+        title="Add to Cart"
+        onPress={() => {
+          dispatch(addToCart(selectedProduct));
+          navigation.navigate('Cart Screen');
+        }}
+      />
       <Text style={styles.price}>${selectedProduct.price.toFixed(2)}</Text>
       <Text style={styles.description}>{selectedProduct.description}</Text>
     </ScrollView>
@@ -33,21 +60,21 @@ const ProductDetailsScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  image:{
+  image: {
     width: '100%',
-    height:300
+    height: 300,
   },
   price: {
-    fontSize:20,
+    fontSize: 20,
     color: '#888',
-    textAlign:'center',
-    marginVertical:20
+    textAlign: 'center',
+    marginVertical: 20,
+    // fontFamily:"open-sans-bold"
   },
   description: {
-    fontSize:14,
-    textAlign:'center'
-  }
-
+    fontSize: 14,
+    textAlign: 'center',
+  },
 });
 
 export default ProductDetailsScreen;

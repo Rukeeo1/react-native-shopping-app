@@ -24,7 +24,8 @@ export default (state = initialState, action) => {
       } else {
         updatedOrNewCartItem = new CartItem(
           1,
-          addedProduct,
+          // addedProduct,
+          prodPrice,
           productTitle,
           prodPrice
         );
@@ -41,27 +42,34 @@ export default (state = initialState, action) => {
       //the item entirely
       const selectedCartItem = state.items[action.pid];
       const currentQty = selectedCartItem.quantity;
-      let updatedCartItems;//plurar
-    
+      let updatedCartItems; //plurar
+      console.log(selectedCartItem,'this is the item of choisee')
+
       if (currentQty > 1) {
         //if quantity is greate that one we need to reduce it
-        const updatedCartItem = new CartItem(//singular
-          selectedCartItem.quantity - 1,
-          selectedCartItem.productPrice,
-          selectedCartItem.productTitle,
-          selectedCartItem.sum - productTitle
-        );
-        updatedCartItems = { ...state.items, [action.pid]: updatedCartItem }
+        // const updatedCartItem = new CartItem( //singular
+        //   selectedCartItem.quantity - 1,
+        //   selectedCartItem.productPrice,
+        //   selectedCartItem.productTitle,
+        //   selectedCartItem.sum - selectedCartItem.productPrice
+        // );
+       
+        // updatedCartItems = { ...state.items, [action.pid]: updatedCartItem }
       } else {
         //we need to erase it if it is one or less
-         updatedCartItems = { ...state.items };
-        delete updatedCartItems[action.pid]//delete the given item
+        updatedCartItems = { ...state.items };
+        console.log(updatedCartItems,'deleteing')
+      
+        delete updatedCartItems[action.pid]; //delete the given item
       }
+      console.log(updatedCartItems,'afterdele')
+      console.log(state.totalAmount)
+      console.log(selectedCartItem,'price')
       return {
         ...state,
         items: updatedCartItems,
-        totalAmount: state.totalAmount - selectedCartItem.productPrice
-      }
+        totalAmount: state.totalAmount - selectedCartItem.productPrice,
+      };
 
     default:
       break;

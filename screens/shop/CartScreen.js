@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
 import Colors from '../../constants/colors';
 import { useSelector, useDispatch } from 'react-redux';
 import {removeFromCart} from '../../store/actions/cart'
+import {addOrder} from '../../store/actions/orders'
 
 import CartItem from '../../components/shop/CartItem';
 
@@ -10,6 +11,8 @@ const CartScreen = (props) => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const state = useSelector((state) => state);
 
+
+ 
   const cartItems = useSelector((state) => {
     const transformedCartItems = [];
     for (const key in state.cart.items) {
@@ -21,7 +24,8 @@ const CartScreen = (props) => {
         sum: state.cart.items[key].sum,
       });
     }
-    return transformedCartItems;
+
+    return transformedCartItems.sort((a,b) => a.productId > b.productId ? 1 : -1);
   });
 
   const dispatch = useDispatch();
@@ -37,6 +41,11 @@ const CartScreen = (props) => {
           color={Colors.accent}
           title="Order Now"
           disabled={cartItems && cartItems.length === 0}
+          onPress={() => {
+            dispatch(addOrder(cartItems, cartTotalAmount))
+          }
+
+          }
         />
       </View>
       <View>

@@ -7,11 +7,13 @@ import productsReducers from './store/reducers/products';
 import { AppLoading } from 'expo';
 import {composeWithDevTools} from 'redux-devtools-extension'
 import cartReducer from './store/reducers/cart'
+import ordersReducer from './store/reducers/orders'
 import * as Font from 'expo-font'
 
 const rootReducer = combineReducers({
   products: productsReducers,
-  cart: cartReducer
+  cart: cartReducer,
+  orders: ordersReducer
 });
 
 //redux

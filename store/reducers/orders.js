@@ -19,9 +19,7 @@ export default (state = initialState, action) => {
         orders: state.orders.concat(newOrder)
       }
 
-      break;
-
     default:
-      break;
+      return state
   }
 };

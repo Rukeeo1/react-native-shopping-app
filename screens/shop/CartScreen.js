@@ -49,7 +49,10 @@ const CartScreen = (props) => {
         />
       </View>
       <View>
-        <Text>CART ITEMS</Text>
+        <Text style={{
+          marginLeft: 20,
+          marginBottom:10
+        }}>CART ITEMS</Text>
         <FlatList
           data={cartItems}
           keyExtractor={(item) => item.productId}

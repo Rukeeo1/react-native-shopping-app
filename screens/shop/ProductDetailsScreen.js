@@ -25,12 +25,6 @@ const ProductDetailsScreen = ({ route, navigation }) => {
     navigation.setOptions({
       headerRight: () => (
         <View>
-          {Platform.OS === 'ios' && (
-            <Button
-              title="Add"
-              onPress={() => navigation.navigate('Cart Screen')}
-            />
-          )}
           <Entypo
             name="shopping-cart"
             size={24}

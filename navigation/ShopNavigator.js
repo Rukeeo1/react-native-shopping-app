@@ -20,7 +20,8 @@ const defaultNavOptions = {
 
 const Stack = createStackNavigator();
 
-const ProductNavigator = () => {
+const ProductNavigator = (props) => {
+  console.log(props,'thes are porps')
   return (
     <Stack.Navigator initialRouteName="Products">
       <Stack.Screen name="Products" component={ProductOverviewScreen} />
@@ -47,7 +48,7 @@ const ShopNavigator = () => {
 
   return (
     <Navigator>
-      <Screen name="Products" component={ProductNavigator} />
+      <Screen name="Products" component={ProductNavigator}  options={{}}/>
       <Screen name="Orders" component={OrdersScreenNavigator} />
     </Navigator>
   );
